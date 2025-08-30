@@ -2,26 +2,26 @@
    Minimalist avatars until hover
    Smooth animation included
 */
- 
+
 :root {
   --radius-sm: 6px;
   --radius-md: 10px;
   --radius-lg: 14px;
   --radius-xl: 18px;
 }
- 
+
 /* Collapsed by default: only avatars visible */
 .container_b2ca13 {
   width: 48px; /* avatar size column */
   overflow: hidden;
   transition: width 0.35s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
- 
+
 /* Expand smoothly on hover */
 .container_b2ca13:hover {
   width: 240px; /* full member list */
 }
- 
+
 /* Member item styling */
 .container_b2ca13 .member__5d473 {
   border-radius: var(--radius-sm);
