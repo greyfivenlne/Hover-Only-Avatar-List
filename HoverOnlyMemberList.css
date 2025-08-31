@@ -1,32 +1,133 @@
-/* Hover-Only Avatar Member List
-   Minimalist avatars until hover
-   Smooth animation included
+/* AvatarOnlyMemberList.css
+   Hover-only member list for Vencord
+   - Collapsed: avatar icons only
+   - Hover: smooth expansion to full list
+   - Works with most class/aria-label variants
 */
 
 :root {
-  --radius-sm: 6px;
-  --radius-md: 10px;
-  --radius-lg: 14px;
-  --radius-xl: 18px;
+  --ml-collapsed: 56px;   /* width when collapsed */
+  --ml-expanded: 260px;   /* width when hovered */
+  --ml-anim: .34s cubic-bezier(.25,.8,.25,1);
+  --ml-avatar-size: 36px;
 }
 
-/* Collapsed by default: only avatars visible */
-.container_b2ca13 {
-  width: 48px; /* avatar size column */
-  overflow: hidden;
-  transition: width 0.35s cubic-bezier(0.25, 0.8, 0.25, 1);
+/* Base container collapse */
+:is(
+  [aria-label="Member List"],
+  [aria-label="Members"],
+  [data-list-id="members"],
+  .membersWrap_c8ffbb,
+  .container_b2ca13,
+  [class*="membersWrap"],
+  [class*="membersColumn"],
+  [class*="members"]
+) {
+  flex: 0 0 var(--ml-collapsed) !important;
+  width: var(--ml-collapsed) !important;
+  min-width: var(--ml-collapsed) !important;
+  max-width: var(--ml-collapsed) !important;
+  overflow: hidden !important;
+  transition: width var(--ml-anim), flex-basis var(--ml-anim);
+  background: transparent !important;
 }
 
-/* Expand smoothly on hover */
-.container_b2ca13:hover {
-  width: 240px; /* full member list */
+/* Expand on hover */
+:is(
+  [aria-label="Member List"]:hover,
+  [aria-label="Members"]:hover,
+  [data-list-id="members"]:hover,
+  .membersWrap_c8ffbb:hover,
+  .container_b2ca13:hover,
+  [class*="membersWrap"]:hover,
+  [class*="membersColumn"]:hover,
+  [class*="members"]:hover
+) {
+  width: var(--ml-expanded) !important;
+  min-width: var(--ml-expanded) !important;
+  max-width: var(--ml-expanded) !important;
+  flex: 0 0 var(--ml-expanded) !important;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.45);
 }
 
-/* Member item styling */
-.container_b2ca13 .member__5d473 {
-  border-radius: var(--radius-sm);
-  transition: background 0.2s ease;
+/* Hide names, headers, extras when collapsed */
+:is(
+  [aria-label="Member List"],
+  [aria-label="Members"],
+  [data-list-id="members"],
+  .membersWrap_c8ffbb,
+  .container_b2ca13,
+  [class*="membersWrap"],
+  [class*="membersColumn"],
+  [class*="members"]
+):not(:hover)
+  :is(
+    [class*="name"],
+    [class*="username"],
+    [class*="memberName"],
+    [class*="role"],
+    [class*="subText"],
+    [class*="activity"],
+    [class*="badge"],
+    [class*="header"],
+    [class*="memberGroup"],
+    [class*="search"]
+  ) {
+  display: none !important;
+  opacity: 0 !important;
+  width: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
 }
-.container_b2ca13 .member__5d473:hover {
-  background: rgba(255, 255, 255, 0.08);
+
+/* Center avatars while collapsed */
+:is(
+  [aria-label="Member List"],
+  [aria-label="Members"],
+  [data-list-id="members"],
+  .membersWrap_c8ffbb,
+  .container_b2ca13,
+  [class*="membersWrap"],
+  [class*="membersColumn"],
+  [class*="members"]
+):not(:hover)
+  :is([class*="avatar"], img.avatar) {
+  width: var(--ml-avatar-size) !important;
+  height: var(--ml-avatar-size) !important;
+  margin: 6px auto !important;
+  display: block !important;
+  border-radius: 50% !important;
+}
+
+/* Smooth scroller alignment */
+:is(
+  [aria-label="Member List"],
+  [aria-label="Members"],
+  [data-list-id="members"],
+  .membersWrap_c8ffbb,
+  .container_b2ca13,
+  [class*="membersWrap"],
+  [class*="membersColumn"],
+  [class*="members"]
+):not(:hover) .scroller_ef3116 {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  overflow-y: auto !important;
+}
+
+/* Reset to normal when hovered */
+:is(
+  [aria-label="Member List"],
+  [aria-label="Members"],
+  [data-list-id="members"],
+  .membersWrap_c8ffbb,
+  .container_b2ca13,
+  [class*="membersWrap"],
+  [class*="membersColumn"],
+  [class*="members"]
+):hover * {
+  opacity: 1 !important;
+  display: revert !important;
+  width: revert !important;
 }
